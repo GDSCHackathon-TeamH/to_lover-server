@@ -1,0 +1,22 @@
+spring:
+
+  config:
+    name: to_lover
+    activate:
+      on-profile: local
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://3.35.56.82:3306/alarm?serverTimezone=Asia/Seoul&CharacterEncoding=UTF-8
+    username: alarm-user
+    password: dkffka12!
+
+  servlet:
+    multipart:
+      maxFileSize: 25MB
+      maxRequestSize: 25MB
+
+
+jwt:
+  secret: ZHVvc19zcHJpbmdfYm9vdF9qd3Rfc2VjcmV0X2tle128YWRlX2J5X2dhcml0X2p3dF9pc192ZXJ5X2RpZmZpY3VsdF9idXRfSV9zdWNjZWVk
+
