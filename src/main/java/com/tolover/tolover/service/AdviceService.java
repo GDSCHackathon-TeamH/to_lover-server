@@ -48,8 +48,8 @@ public class AdviceService {
         adviceRepository.save(new Advice("완벽한 사랑도, 완벽한 인연도 없어요."));
         adviceRepository.save(new Advice("헤어진 사람은 당신에게 어울리는 사람이 아니에요."));
         adviceRepository.save(new Advice("만나고, 알고, 사랑하고, 그리고 이별하는 것이 우리 인간의 공통된 슬픈 이야기 입니다."));
-        adviceRepository.save(new Advice("싱글을 즐기세요."));
-        adviceRepository.save(new Advice("나가서 걸어봐요."));
+        adviceRepository.save(new Advice("더 좋은 사람들을 만날수 있을거에요."));
+        adviceRepository.save(new Advice("지나간 슬픔에 새 눈물을 낭비하지 말아요."));
         adviceRepository.save(new Advice("태어난 모든 것들은 기약조차 없는 이별을 준비하고 있어야 해요."));
         adviceRepository.save(new Advice("이별의 슬픔 속에서만 사랑의 깊이를 알게 됩니다."));
         adviceRepository.save(new Advice("사랑하는 사람과 어떻게 헤어지게 되었을까 후회하는 것만큼 깊은 상처는 없어요"));
