@@ -5,6 +5,7 @@ import com.tolover.tolover.repository.AdviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,11 +14,10 @@ public class AdviceService {
     @Autowired
     private AdviceRepository adviceRepository;
 
-    public Advice getRandomAdvice() {
+    public List<Advice> getRandomAdvice(int count) {
         List<Advice> advices = adviceRepository.findAll();
         if (advices.isEmpty()) {
             addDefaultAdvices();
-
             advices = adviceRepository.findAll();
         }
         if (advices.isEmpty()) {
@@ -25,10 +25,20 @@ public class AdviceService {
         }
 
         Random random = new Random();
-        int randomIndex = random.nextInt(advices.size());
-        return advices.get(randomIndex);
-    }
+        int totalSize = advices.size();
+        List<Advice> selectedAdvices = new ArrayList<>();
 
+        int numberOfAdvicesToSelect = Math.min(count, totalSize);
+
+        for (int i = 0; i < numberOfAdvicesToSelect; i++) {
+            int randomIndex = random.nextInt(totalSize);
+            selectedAdvices.add(advices.get(randomIndex));
+            advices.remove(randomIndex);
+            totalSize--;
+        }
+
+        return selectedAdvices;
+    }
     private void addDefaultAdvices() {
         adviceRepository.save(new Advice("내가 둘 중 더 가슴 아파하는 사람이라도 괜찮아요."));
         adviceRepository.save(new Advice("과식과 폭음, 쇼핑, 여러 사람들과의 수많은 데이트들이 당신의 기분을 좋게 만들게 해줄 거라 믿지 말아요."));
@@ -38,8 +48,8 @@ public class AdviceService {
         adviceRepository.save(new Advice("완벽한 사랑도, 완벽한 인연도 없어요."));
         adviceRepository.save(new Advice("헤어진 사람은 당신에게 어울리는 사람이 아니에요."));
         adviceRepository.save(new Advice("만나고, 알고, 사랑하고, 그리고 이별하는 것이 우리 인간의 공통된 슬픈 이야기 입니다."));
-        adviceRepository.save(new Advice("싱글을 즐기세요."));
-        adviceRepository.save(new Advice("나가서 걸어봐요."));
+        adviceRepository.save(new Advice("더 좋은 사람들을 만날수 있을거에요."));
+        adviceRepository.save(new Advice("지나간 슬픔에 새 눈물을 낭비하지 말아요."));
         adviceRepository.save(new Advice("태어난 모든 것들은 기약조차 없는 이별을 준비하고 있어야 해요."));
         adviceRepository.save(new Advice("이별의 슬픔 속에서만 사랑의 깊이를 알게 됩니다."));
         adviceRepository.save(new Advice("사랑하는 사람과 어떻게 헤어지게 되었을까 후회하는 것만큼 깊은 상처는 없어요"));
