@@ -3,6 +3,7 @@ package com.tolover.tolover.service;
 import com.tolover.tolover.domain.Diary;
 import com.tolover.tolover.domain.Todo;
 import com.tolover.tolover.domain.UserEntity;
+import com.tolover.tolover.dto.user.DiaryListResDTO;
 import com.tolover.tolover.dto.user.DiaryRequestDto;
 import com.tolover.tolover.dto.user.DiaryResponseDto;
 import com.tolover.tolover.dto.user.DiaryTodoListResDTO;
@@ -29,7 +30,7 @@ public class DiarySerivce {
     private final TodoService todoService;
 
     @Transactional
-    public DiaryResponseDto createDiary(DiaryRequestDto diaryRequestDto, Long userId, Long todoId) {
+    public DiaryListResDTO createDiary(DiaryRequestDto diaryRequestDto, Long userId, Long todoId) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
@@ -43,7 +44,11 @@ public class DiarySerivce {
                 .build();
 
         Diary savedDiary = diaryRepository.save(newDiary);
-        return savedDiary.toDto();
+        return DiaryListResDTO.builder()
+                .todoId(savedDiary.getTodo().getId())
+                .diaryText(savedDiary.getBody())
+                .createdAt(savedDiary.getCreatedAt())
+                .build();
     }
 
     @Transactional
