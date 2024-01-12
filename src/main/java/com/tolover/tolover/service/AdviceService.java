@@ -46,9 +46,9 @@ public class AdviceService {
         adviceRepository.save(new Advice("사랑을 잃었을 때 치료법은 더욱 사랑하는 것밖에 없는것 같아요"));
         adviceRepository.save(new Advice("아름다운 이별은 없어요. 다만 아름답게 사랑한 후에는 좋은 추억이 남아요."));
         adviceRepository.save(new Advice("이별은 가혹한 고통이지만 잘 견뎌내기만 하면 또 다른 사랑, 또 다른 행복의 문으로 들어갈 수 있어요."));
-        adviceRepository.save(new Advice(""));
-        adviceRepository.save(new Advice(""));
-        adviceRepository.save(new Advice(""));
-        adviceRepository.save(new Advice(""));
+        adviceRepository.save(new Advice("과거를 기억하되, 머물지 말고, 미래를 꿈꾸되 현재에 집중해 봐요."));
+        adviceRepository.save(new Advice("행복하게 살기 위해서는 자유로워야 하고, 자유로워지려면 때로는 과거를 놓아주어야 해요."));
+        adviceRepository.save(new Advice("이별은 새로운 모험의 문이 될수 있어요."));
+        adviceRepository.save(new Advice("이별은 우리가 더 나은 사람으로 성장하도록 하는 열쇠에요."));
     }
 }

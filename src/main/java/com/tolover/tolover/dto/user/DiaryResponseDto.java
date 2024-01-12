@@ -10,4 +10,5 @@ import java.util.Date;
 public class DiaryResponseDto {
     private String body;
     private Date createdAt;
+    private Long todoId;
 }

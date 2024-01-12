@@ -20,6 +20,7 @@ public class Todo {
     @Column(name = "TEXT")
     private String text;
 
+
     @Builder
     public Todo(String text){
         this.text=text;
