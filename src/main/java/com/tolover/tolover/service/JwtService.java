@@ -153,5 +153,33 @@ public class JwtService {
         }
     }
 
+    public long getUserIdx() throws BaseException{
+        String accessToken = getAccessToken();
+
+        if (accessToken == null || accessToken.length() == 0) {
+            log.error("Access 토큰을 입력해주세요.");
+            throw new BaseException(EMPTY_ACCESS_JWT);
+        }
+
+        try {
+            int userIdxInJwt = Jwts
+                    .parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(accessToken)
+                    .getBody()
+                    .get("userIdx", Integer.class);
+            return userIdxInJwt;
+
+        } catch (ExpiredJwtException e) {
+            log.error("만료된 Access 토큰입니다. Refresh 토큰을 이용해서 새로운 Access 토큰을 발급 받으세요.");
+            throw new BaseException(EXPIRED_ACCESS_JWT);
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+            log.error("지원되지 않거나 잘못된 Access 토큰 입니다.");
+            throw new BaseException(INVALID_ACCESS_JWT);
+        }
+
+    }
+
 }
 
