@@ -1,4 +1,9 @@
 package com.tolover.tolover.repository;
 
-public class UserRepository {
+import com.tolover.tolover.domain.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<UserEntity,Long> {
+
+
 }
