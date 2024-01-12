@@ -34,10 +34,15 @@ public class Diary {
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "TODO_ID")
+    private Todo todo;
+
     @Builder
-    public Diary(String body, UserEntity user){
+    public Diary(String body, UserEntity user, Todo todo){
         this.body=body;
         this.user=user;
+        this.todo=todo;
     }
 
     public DiaryResponseDto toDto(){
