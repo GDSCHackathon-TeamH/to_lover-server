@@ -6,14 +6,12 @@ import com.tolover.tolover.dto.user.KakaoLoginReqDTO;
 import com.tolover.tolover.dto.user.LoginResDTO;
 import com.tolover.tolover.exception.BaseException;
 import com.tolover.tolover.exception.BaseResponse;
+import com.tolover.tolover.service.JwtService;
 import com.tolover.tolover.service.KakaoService;
 import com.tolover.tolover.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.tolover.tolover.exception.BaseResponseStatus.INVALID_ACCESS_KAKAO;
 import static com.tolover.tolover.exception.BaseResponseStatus.SIGNUP_ALREADY_EXIST_KAKAO_MEMBER;
@@ -72,6 +70,11 @@ public class UserController {
             return new BaseResponse<>(e.getStatus());
         }
 
+    }
+
+    @GetMapping("/temp")
+    public String login(@RequestParam Long kakaoIdx){
+        return userService.temp(kakaoIdx);
     }
 
 }
