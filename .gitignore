@@ -9,9 +9,6 @@ build/
 /src/main/resources/application-local.yml
 /src/main/resources/datasource-config.yml
 
-/src/main/resources/application-local.yml
-/src/main/resources/datasource-config.yml
-
 ### STS ###
 .apt_generated
 .classpath
