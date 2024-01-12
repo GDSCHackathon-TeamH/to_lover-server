@@ -153,7 +153,7 @@ public class JwtService {
         }
     }
 
-    public int getUserIdx() throws BaseException{
+    public long getUserIdx() throws BaseException{
         String accessToken = getAccessToken();
 
         if (accessToken == null || accessToken.length() == 0) {

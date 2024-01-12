@@ -2,6 +2,7 @@ package com.tolover.tolover.controller;
 
 import com.tolover.tolover.dto.user.DiaryRequestDto;
 import com.tolover.tolover.dto.user.DiaryResponseDto;
+import com.tolover.tolover.exception.BaseException;
 import com.tolover.tolover.service.DiarySerivce;
 import com.tolover.tolover.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -22,18 +23,14 @@ public class DiaryController {
     private final DiarySerivce diarySerivce;
     private final JwtService jwtService;
     @PostMapping("/save")
-    public ResponseEntity<DiaryResponseDto> createPost(@RequestBody DiaryRequestDto diaryRequestDto) {
-        try {
-            jwtService.val
-            Long userId = Long.parseLong(principal.getName());
+    public ResponseEntity<DiaryResponseDto> createPost(@RequestBody DiaryRequestDto diaryRequestDto) throws BaseException {
+            Long userId = jwtService.getUserIdx();
             Long todoId = diaryRequestDto.getTodoId();
 
             DiaryResponseDto createdPost = diarySerivce.createDiary(diaryRequestDto, userId, todoId);
 
             return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
-        } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+
     }
     @GetMapping("/findByUserAndDate")
     public ResponseEntity<List<DiaryResponseDto>> getPostsByUserAndDate(Principal principal,
