@@ -5,6 +5,7 @@ import com.tolover.tolover.repository.AdviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,11 +14,10 @@ public class AdviceService {
     @Autowired
     private AdviceRepository adviceRepository;
 
-    public Advice getRandomAdvice() {
+    public List<Advice> getRandomAdvice(int count) {
         List<Advice> advices = adviceRepository.findAll();
         if (advices.isEmpty()) {
             addDefaultAdvices();
-
             advices = adviceRepository.findAll();
         }
         if (advices.isEmpty()) {
@@ -25,10 +25,20 @@ public class AdviceService {
         }
 
         Random random = new Random();
-        int randomIndex = random.nextInt(advices.size());
-        return advices.get(randomIndex);
-    }
+        int totalSize = advices.size();
+        List<Advice> selectedAdvices = new ArrayList<>();
 
+        int numberOfAdvicesToSelect = Math.min(count, totalSize);
+
+        for (int i = 0; i < numberOfAdvicesToSelect; i++) {
+            int randomIndex = random.nextInt(totalSize);
+            selectedAdvices.add(advices.get(randomIndex));
+            advices.remove(randomIndex);
+            totalSize--;
+        }
+
+        return selectedAdvices;
+    }
     private void addDefaultAdvices() {
         adviceRepository.save(new Advice("내가 둘 중 더 가슴 아파하는 사람이라도 괜찮아요."));
         adviceRepository.save(new Advice("과식과 폭음, 쇼핑, 여러 사람들과의 수많은 데이트들이 당신의 기분을 좋게 만들게 해줄 거라 믿지 말아요."));

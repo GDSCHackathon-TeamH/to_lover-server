@@ -1,6 +1,7 @@
 package com.tolover.tolover.controller;
 
 import com.tolover.tolover.domain.Diary;
+import com.tolover.tolover.dto.user.DiaryListResDTO;
 import com.tolover.tolover.dto.user.DiaryRequestDto;
 import com.tolover.tolover.dto.user.DiaryResponseDto;
 import com.tolover.tolover.dto.user.DiaryTodoListResDTO;
@@ -30,17 +31,17 @@ public class DiaryController {
     private final JwtService jwtService;
     private final TodoService todoService;
     @PostMapping("/save")
-    public String createPost(@RequestBody DiaryRequestDto diaryRequestDto) throws BaseException {
-
+    public ResponseEntity<DiaryListResDTO> createPost(@RequestBody DiaryRequestDto diaryRequestDto) throws BaseException {
         String body = diaryRequestDto.getBody();
         Long userId = jwtService.getUserIdx();
         Long todoId = diaryRequestDto.getTodoId();
 
-        DiaryResponseDto createdPost = diarySerivce.createDiary(diaryRequestDto, userId, todoId);
-        String createdAt = createdPost.getCreatedAt().toString();
+        // DiaryResponseDto createdPost = diarySerivce.createDiary(diaryRequestDto, userId, todoId);
+       //String createdAt = createdPost.getCreatedAt().toString();
         //return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+        DiaryListResDTO createdPost = diarySerivce.createDiary(diaryRequestDto, userId, todoId);
 
-        return createdAt;
+        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
 
     }
     @GetMapping("/findByUserAndDate")
