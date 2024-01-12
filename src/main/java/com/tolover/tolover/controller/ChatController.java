@@ -3,6 +3,7 @@ package com.tolover.tolover.controller;
 
 import com.tolover.tolover.dto.chat.CreateChatRoomReqDTO;
 import com.tolover.tolover.dto.chat.CreateChatRoomResDTO;
+import com.tolover.tolover.dto.chat.SendMessageDTO;
 import com.tolover.tolover.exception.BaseException;
 import com.tolover.tolover.exception.BaseResponse;
 import com.tolover.tolover.service.ChatService;
@@ -38,7 +39,13 @@ public class ChatController {
 
 
     // message 보내기 (기존 것 포함 해서 가지고)
+    @PostMapping("")
+    public BaseResponse<CreateChatRoomResDTO> sendMessage(@RequestBody SendMessageDTO sendMessageDTO) throws BaseException {
+        Long userid = jwtService.getUserIdx();
+        CreateChatRoomResDTO result = chatService.sendMessageAfter(sendMessageDTO, userid);
 
+        return new BaseResponse<>(result);
+    }
 
 
     // 채팅 했던 내용 불러오기

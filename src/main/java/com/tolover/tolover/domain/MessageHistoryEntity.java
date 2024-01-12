@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name="chat")
+@Table(name="message_history")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,7 +20,7 @@ public class MessageHistoryEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "chat_room_id", referencedColumnName = "id", insertable = true, updatable = true)
     private ChatRoomEntity chatRoom;
 
     @Column(name="created_at", insertable = false, updatable = false)
