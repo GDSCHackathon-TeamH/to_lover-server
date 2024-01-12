@@ -1,5 +1,7 @@
 package com.tolover.tolover.controller;
 
+import com.tolover.tolover.domain.UserEntity;
+import com.tolover.tolover.dto.user.CreateUserReqDTO;
 import com.tolover.tolover.dto.user.KakaoLoginReqDTO;
 import com.tolover.tolover.dto.user.LoginResDTO;
 import com.tolover.tolover.exception.BaseException;
@@ -30,44 +32,46 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public BaseResponse<Integer> login(@RequestBody KakaoLoginReqDTO kakaoLoginReqDTO){
+    public BaseResponse<LoginResDTO> login(@RequestBody KakaoLoginReqDTO kakaoLoginReqDTO){
 
         try{
             long kakaoIdx = kakaoService.checkKakaoUser(kakaoLoginReqDTO.getAccessToken());
 
+            UserEntity user = userService.getUser(kakaoIdx);
             //만약 DB에 이미 존재하는 유저라면 로그인
-
-
-
-            //존재하지 않는다면 회원가입
-//            LoginResDTO result = userService.loginUser(kakaoIdx);
-//            return new BaseResponse<>(result);
+            if(user != null){
+                LoginResDTO result = userService.login(user);
+                return new BaseResponse<>(result);
+            }
+            else//존재 하지 않는다면 회원가입 요청
+            {
+                LoginResDTO result = LoginResDTO.builder()
+                        .resultMessage("회원가입 필요")
+                        .build();
+                return new BaseResponse<>(result);
+            }
 
         }catch (BaseException e){
             log.error(" API : api/login" + "\n Message : " + e.getMessage() + "\n Cause : " + e.getCause());
             return new BaseResponse<>(e.getStatus());
         }
 
-
-//        try {
-//            // 사용자 생성
-//            long kakaoIdx = kakaoService.checkKakaoUser(createUserReqDTO.getAccessToken());
-//            KakaoMemberCheckResDTO kakaoMemberCheckResDTO = userService.checkKakoMember(kakaoIdx);
-//            if(kakaoMemberCheckResDTO.getIsMember()==true){
-//                return new BaseResponse<>(SIGNUP_ALREADY_EXIST_KAKAO_MEMBER);
-//            }
-//
-//            if (kakaoIdx != 0) {
-//                CreateUserResDTO result = userService.createUser(createUserReqDTO,kakaoIdx);
-//                return new BaseResponse<>(result);
-//            }else {
-//                return new BaseResponse<>(INVALID_ACCESS_KAKAO);
-//            }
-//
-//        } catch (BaseException e) {
-//            log.error(" API : api/signup" + "\n Message : " + e.getMessage() + "\n Cause : " + e.getCause());
-//            return new BaseResponse<>(e.getStatus());
-//        }
-        return new BaseResponse<>(1);
     }
+
+    @PostMapping("/signup")
+    public BaseResponse<LoginResDTO> signUp(@RequestBody CreateUserReqDTO createUserReqDTO){
+
+        try{
+            long kakaoIdx = kakaoService.checkKakaoUser(createUserReqDTO.getAccessToken());
+            //존재 하지 않는다면 회원가입 요청
+            LoginResDTO result = userService.createUser(createUserReqDTO, kakaoIdx);
+            return new BaseResponse<>(result);
+
+        }catch (BaseException e){
+            log.error(" API : api/login" + "\n Message : " + e.getMessage() + "\n Cause : " + e.getCause());
+            return new BaseResponse<>(e.getStatus());
+        }
+
+    }
+
 }
