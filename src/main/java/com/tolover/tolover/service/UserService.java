@@ -62,4 +62,9 @@ public class UserService {
                 jwtRefreshToken
         );
     }
+
+    public String temp(long kakaoIdx){
+        UserEntity user = getUser(kakaoIdx);
+        return jwtService.createAccessToken(user.getId());
+    }
 }
