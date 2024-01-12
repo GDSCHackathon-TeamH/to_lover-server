@@ -31,13 +31,8 @@ public class DiaryController {
     private final JwtService jwtService;
     private final TodoService todoService;
     @PostMapping("/save")
-<<<<<<< HEAD
     public ResponseEntity<DiaryListResDTO> createPost(@RequestBody DiaryRequestDto diaryRequestDto) throws BaseException {
-=======
-    public String createPost(@RequestBody DiaryRequestDto diaryRequestDto) throws BaseException {
 
-
->>>>>>> 494b017473415f58388a737d00f5b3942382a1aa
         String body = diaryRequestDto.getBody();
         Long userId = jwtService.getUserIdx();
         Long todoId = diaryRequestDto.getTodoId();
