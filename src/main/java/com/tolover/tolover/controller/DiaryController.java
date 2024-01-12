@@ -32,6 +32,7 @@ public class DiaryController {
     @PostMapping("/save")
     public String createPost(@RequestBody DiaryRequestDto diaryRequestDto) throws BaseException {
 
+
         String body = diaryRequestDto.getBody();
         Long userId = jwtService.getUserIdx();
         Long todoId = diaryRequestDto.getTodoId();
